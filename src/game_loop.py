@@ -18,7 +18,7 @@ class GameLoop:
 
     def run(self):
         pygame.init()
-        pygame.display.set_caption("Buraco negro da morte")
+        pygame.display.set_caption("Buraco negro")
 
         tela = pygame.display.set_mode((LAR, ALT))
 
@@ -34,25 +34,30 @@ class GameLoop:
             
             keys = pygame.key.get_pressed()
             
-            if(keys[pygame.K_RIGHT]):
+            if(keys[pygame.K_RIGHT] or keys[pygame.K_d]):
                 velocidade_x += 1
-            if(keys[pygame.K_LEFT]):
+            if(keys[pygame.K_LEFT] or keys[pygame.K_a]):
                 velocidade_x -=  1
-            if(keys[pygame.K_UP]):
+            if(keys[pygame.K_UP] or keys[pygame.K_w]):
                 velocidade_y -= 1
-            if(keys[pygame.K_DOWN]):
+            if(keys[pygame.K_DOWN] or keys[pygame.K_s]):
                 velocidade_y += 1
             
+            if(velocidade_x != 0 and velocidade_y != 0):
+                #limitar , esse cara ta indo na diagonal!
+                velocidade_x *= (2 ** (1/2)) / 2 # velocidadex *= sqrt(2)/2, basicamente isso aqui é velocidade_x * sen/cos mas aqui o angulo eh semrpe 45 entao generalizei
+                velocidade_y *= (2 ** (1/2)) / 2
             velocidade_x *= self.velocidade
             velocidade_y *= self.velocidade
             self.pos_x += velocidade_x
             self.pos_y += velocidade_y
-                        
-            if(r.randint(1,100) == 1):
-                comida_x = r.randint(int(self.pos_x) - RAIO_COMIDA, int(self.pos_x) + RAIO_COMIDA)
-                comida_y = r.randint(int(self.pos_y) - RAIO_COMIDA, int(self.pos_y) + RAIO_COMIDA)
-                comida_pos = (comida_x, comida_y)
-                self.comidinhas.append([comida_pos, r.randint(1, int(self.raio * 0.4))])
+
+            if(len(self.comidinhas) < 100):            
+                if(r.randint(1,100) == 1):
+                    comida_x = r.randint(int(self.pos_x) - RAIO_COMIDA, int(self.pos_x) + RAIO_COMIDA)
+                    comida_y = r.randint(int(self.pos_y) - RAIO_COMIDA, int(self.pos_y) + RAIO_COMIDA)
+                    comida_pos = (comida_x, comida_y)
+                    self.comidinhas.append([comida_pos, r.randint(1, int(self.raio * 0.4))])
         
             tela.fill(FUNDO)
             player.draw(tela)
