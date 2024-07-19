@@ -65,4 +65,46 @@ Certifique-se de ter o PIP instalado. Na raiz, rode o seguinte comando:
 pip install -r requirements.txt
 ```
 
+## Fluxo do Git
+
+### ATENÇÃO: Não dê commit na branch main ou na dev em hipótese alguma.
+
+Nós vamos utilizar uma coisa chamada Git Flow para organizar nosso projeto sem ter dor de cabeça.
+
+<img src="https://wac-cdn.atlassian.com/dam/jcr:34c86360-8dea-4be4-92f7-6597d4d5bfae/02%20Feature%20branches.svg?cdnVersion=1998" width="1000">
+
+Perceba que para criarmos as features do nosso jogo, precisamos sempre criar uma branch diretamente da dev, para depois mergearmos. 
+
+Se não fizermos isso, podem acontecer conflitos que vão ter que ser resolvidos na mão.
+
+Portando, quando for codar, siga os seguintes passos:
+
+Na raiz da pasta do jogo, escreva no terminal:
+
+```
+git checkout dev #Trocando pra branch dev
+
+git pull origin dev #Verificando se existem alterações no repositório do GitHub
+
+git branch "feature/nome_da_feature" #Criando nova branch, diretamente da dev
+
+git checkout feature/nome_da_feature #Trocando pra nova branch
+```
+
+Se você criar uma nova branch com base na dev e fizer alterações lá sem a dev estar atualizada, vai dar pau.
+
+Após codar:
+
+```
+git add . #Fazendo o git adicionar os novos arquivos que serão mudados
+
+git commit -m "feat/nome_da_feature: escreva aqui uma mensagem curta explicando o que foi feito, ex: added new weapon"
+
+git push origin feat/nome_da_feature
+```
+
+Se você não se sente confortável de interagir com o terminal, pode tentar fazer tudo aqui pelo GitHub. Mas certifique-se que está fazendo a branch diretamente da dev.
+
+Vamos sempre tentar fazer os merges juntos, para se der conflito, poder resolver.
+
 Agora você está pronto para interagir com o projeto.
