@@ -11,14 +11,22 @@ limpar()
 print("iniciando")
 
 pygame.init()
-
-tela = pygame.display.set_mode((800, 600)) #largura , altura
+LAR, ALT = 800, 600
+tela = pygame.display.set_mode((LAR, ALT)) #largura , altura
 pygame.display.set_caption("Buraco negro da morte")
 
-fundo = (0, 0, 0) #preto
-player = (255,0,0) #vermelho
+FUNDO = (255, 255, 255) #branco
+PLAYER = (0,0,0) #preto
+COMIDA = (255, 0, 0) #vermelho
+#jogador:
+
+pos_x = LAR // 2
+pos_y = ALT // 2
+raio = 25
 
 jogando = True
+def circulo(x, y, raio, cor):
+    pygame.draw.circle(tela, cor, (int(x), int(y)), int(raio))
 
 while jogando:
     for event in pygame.event.get():
@@ -26,14 +34,16 @@ while jogando:
             jogando = False
     
     #desenhar
-    tela.fill(fundo)
+    tela.fill(FUNDO)
+    circulo(pos_x, pos_y, raio, PLAYER)
+    pygame.display.flip()
 
 print("saindo")
 """
 Todo:
 
 [X] - Abrir o pygame 
-[ ] - Mostrar o player 
+[X] - Mostrar o player 
 [ ] - Fazer o player andar 
 [ ] - Spawnar comida ao redor do player
 [ ] - Detectar colisão entre player e comida
