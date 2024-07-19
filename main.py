@@ -1,6 +1,6 @@
 import pygame
 import os
-
+import random as r
 def limpar(): #so para fins de organizar isso
     if os.name == "nt":
         os.system("cls")
@@ -15,27 +15,42 @@ LAR, ALT = 800, 600
 tela = pygame.display.set_mode((LAR, ALT)) #largura , altura
 pygame.display.set_caption("Buraco negro da morte")
 
+#config
+
 FUNDO = (255, 255, 255) #branco
 PLAYER = (0,0,0) #preto
 COMIDA = (255, 0, 0) #vermelho
+RAIO_COMIDA = 1000
+RAIO_INICIAL_JOGADOR = 25
+
 #jogador:
 
-pos_x = LAR // 2
-pos_y = ALT // 2
-raio = 25
+pos_x = LAR // 2 # offset
+pos_y = ALT // 2 # offset da camera
+raio = RAIO_INICIAL_JOGADOR
 velocidade = 0.1
 jogando = True
-def circulo(x, y, raio, cor):
-    pygame.draw.circle(tela, cor, (int(x), int(y)), int(raio))
+
+# util
+def circulo(x, y, raio, cor, ehplayer = False):
+    global pos_x
+    global pos_y
+    if not (ehplayer):
+        pygame.draw.circle(tela, cor, (int(x - pos_x) + LAR // 2, int(y - pos_y) + ALT // 2), int(raio))
+    else:
+        pygame.draw.circle(tela, cor, (int(x), int(y)), int(raio)) #sem offset, pois eh o centro da camera
+
+comidinhas = []
 
 while jogando:
+    print(f"{pos_x}, {pos_y}")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             jogando = False
-    #atualizar a posicao do  bro
-    keys = pygame.key.get_pressed()
+    #atualizar a posicao do bro
     velocidade_x = 0
     velocidade_y = 0
+    keys = pygame.key.get_pressed()
     if(keys[pygame.K_RIGHT]):
         velocidade_x += 1
     if(keys[pygame.K_LEFT]):
@@ -49,11 +64,20 @@ while jogando:
     velocidade_y *= velocidade
     pos_x += velocidade_x
     pos_y += velocidade_y
+    #spawnar onde ficaria as comidinhas, 1% de chance de spawnar comida por tick
+    if(r.randint(1,100) == 1):
+        comida_x = r.randint(int(pos_x) - RAIO_COMIDA, int(pos_x) + RAIO_COMIDA)
+        comida_y = r.randint(int(pos_y) - RAIO_COMIDA, int(pos_y) + RAIO_COMIDA)
+        comida_pos = (comida_x, comida_y)
+        comidinhas.append([comida_pos, r.randint(1, int(raio * 0.4))])#tamanho da comida vai ser ate 40% do teu raio
 
     #desenhar
     tela.fill(FUNDO)
-    circulo(pos_x, pos_y, raio, PLAYER)
-    circulo(0,0, 100, COMIDA) #circulo aleatorio so p saber se ele ta se mexendo
+    circulo(LAR // 2, ALT // 2, raio, PLAYER, True) 
+    circulo(0,0, 100, PLAYER)
+    #player deve ser desenhado ANTES dos obstaculos pq ele é um buraco no chao
+    for comida in comidinhas:
+        circulo(comida[0][0], comida[0][1], comida[1], COMIDA)
     pygame.display.flip()
 
 print("saindo")
@@ -63,8 +87,8 @@ Todo:
 [X] - Abrir o pygame 
 [X] - Mostrar o player 
 [X] - Fazer o player andar
-[ ] - Fazer a camera seguir o mano player 
-[ ] - Spawnar comida ao redor do player
+[X] - Fazer a camera seguir o mano player 
+[X] - Spawnar comida ao redor do player
 [ ] - Detectar colisão entre player e comida
 [ ] - Animação da comida caindo no buraco
 
