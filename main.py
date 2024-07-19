@@ -41,9 +41,9 @@ def circulo(x, y, raio, cor, ehplayer = False):
         pygame.draw.circle(tela, cor, (int(x), int(y)), int(raio)) #sem offset, pois eh o centro da camera
 
 comidinhas = []
+animacoes = []
 
 while jogando:
-    print(f"{pos_x}, {pos_y}")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             jogando = False
@@ -74,10 +74,23 @@ while jogando:
     #desenhar
     tela.fill(FUNDO)
     circulo(LAR // 2, ALT // 2, raio, PLAYER, True) 
-    circulo(0,0, 100, PLAYER)
+    for animacao in animacoes:
+        circulo(LAR // 2, ALT // 2, animacao, COMIDA, True)
+        animacoes[animacoes.index(animacao)] -= 0.025
+        animacao -= 0.025
+        if(animacao == 1):
+            animacoes.remove(animacao) 
     #player deve ser desenhado ANTES dos obstaculos pq ele é um buraco no chao
     for comida in comidinhas:
+        dx = comida[0][0] - pos_x
+        dy = comida[0][1] - pos_y
+        pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
+        if pitagoras < raio:
+            comidinhas.remove(comida)
+            animacoes.append(comida[1])
+            raio += comida[1] * 0.1
         circulo(comida[0][0], comida[0][1], comida[1], COMIDA)
+        
     pygame.display.flip()
 
 print("saindo")
@@ -89,14 +102,15 @@ Todo:
 [X] - Fazer o player andar
 [X] - Fazer a camera seguir o mano player 
 [X] - Spawnar comida ao redor do player
-[ ] - Detectar colisão entre player e comida
-[ ] - Animação da comida caindo no buraco
+[X] - Detectar colisão entre player e comida
+[X] - Animação da comida caindo no buraco
 
 (Depois de tudo estar 100% correto):
 
+[ ] - Afastar a camera com o crescimento do raio do player
 [ ] - Aprender a fazer um mapa de background
 [ ] - Meio de criar objetos com texturas customizadas e tal
-[ ] - Aprender a colocar esses objetos no mapa de background
+[ ] - Aprender a colocar esses objetos no mapa de background (fazer uma extensao de arquivo que no eval() é uma lista de objetos com [loc_textura, tamanho, posicao])
 [ ] - Colocar timer limite da partida de 2minutos
 [ ] - Criar historinha inicial (só um prompt dizendo que joaozinho efetuou divisao por 0 na aula de ip e por isso criou um buraco negro) 
 """
