@@ -9,3 +9,5 @@ def limpar():
         os.system("clear")
 
     print("Iniciando...")
+
+    print('sim')
