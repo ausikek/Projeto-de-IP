@@ -2,7 +2,7 @@ import pygame
 import random as r
 from .utils import *
 from .config import LAR, ALT, FUNDO,  PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR
-from .objetos import Player, Food
+from .objetos import Player, Food, Notification
 from .graficos import Graficos
 
 class GameLoop:
@@ -19,6 +19,7 @@ class GameLoop:
         self.comidinhas = []
         self.animacoes = []
         self.g = Graficos()
+        self.notif:Notification = None
 
     def run(self):
         pygame.init()
@@ -27,6 +28,8 @@ class GameLoop:
         tela = pygame.display.set_mode((LAR, ALT))
         
         self.g.setup(tela)
+        
+        self.notif = Notification("Boa sorte!", (0, 0, 0))
 
         while self.jogando:
             for event in pygame.event.get():
@@ -84,7 +87,7 @@ class GameLoop:
                 
                 if(animacao == 1):
                     self.animacoes.remove(animacao)
-
+            
             for comida in self.comidinhas: #Pq criar uma nova classe "Food" a cada tick? Não entendi a vantagem, então vou tirar
                 dx = comida.x - self.pos_x
                 dy = comida.y - self.pos_y
@@ -97,4 +100,10 @@ class GameLoop:
                 
                 comida.draw_spawn(self.g)
 
+            if self.notif != None:
+                self.notif.draw(tela)
+                self.notif.alterar_opacidade(0.0003)
+                if self.notif.pegar_opacidade() < 0.005:
+                    self.notif = None
+            
             pygame.display.flip()
