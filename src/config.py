@@ -1,6 +1,6 @@
 #Screen Resolution
-LAR = 800
-ALT = 600
+LAR = 1200
+ALT = 700
 
 ##Colors
 FUNDO = (255, 255, 255) #branco

@@ -1,14 +1,11 @@
 import src.jogo as src
 from src.utils import limpar
-
+from tela_inicial import TelaInicial
 def main():
-
     limpar()
-
+    TelaInicial()
     game_loop = src.GameLoop()
-
     game_loop.run()
-
     print("Fim do jogo")
 
 if __name__ == "__main__":
@@ -24,7 +21,8 @@ Todo:
 [ ] - Interpolação de movimento
 [ ] - Adicionar uma bombinha, pequena, que fica andando caoticamente
 [ ] - Adicionar uma bomba um pouco maior e mais lenta que diminui teu tamanho
-[ ] - Tela inicial
+[X] - Tela inicial
 [ ] - Quao maior tu ficar, mais dispersas as comidas ficam
+[ ] - Adicionar em graficos.py um load_image, pra facilitar uso de imagem
 
 """
