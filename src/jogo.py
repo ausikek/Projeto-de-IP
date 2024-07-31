@@ -1,21 +1,24 @@
 import pygame
 import random as r
 from .utils import *
-from .config import LAR, ALT, FUNDO, PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR
+from .config import LAR, ALT, FUNDO,  PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR
 from .objetos import Player, Food
 from .graficos import Graficos
+
 class GameLoop:
     
     def __init__(self):
         self.pos_x = LAR // 2
         self.pos_y = ALT // 2
+        self.target_x = self.pos_x  
+        self.target_y = self.pos_y  # 
         self.raio = RAIO_INICIAL_JOGADOR
-        self.velocidade = 0.1
+        self.velocidade = 0.2
+        self.fator_i = 0.01 #  SUAVIDADE DA INTERPOL
         self.jogando = True
         self.comidinhas = []
         self.animacoes = []
         self.g = Graficos()
-
 
     def run(self):
         pygame.init()
@@ -47,13 +50,16 @@ class GameLoop:
                 velocidade_y += 1
             
             if(velocidade_x != 0 and velocidade_y != 0):
-                #limitar , esse cara ta indo na diagonal!
-                velocidade_x *= (2 ** (1/2)) / 2 # velocidadex *= sqrt(2)/2, basicamente isso aqui é velocidade_x * sen/cos mas aqui o angulo eh semrpe 45 entao generalizei
+                velocidade_x *= (2 ** (1/2)) / 2
                 velocidade_y *= (2 ** (1/2)) / 2
             velocidade_x *= self.velocidade
             velocidade_y *= self.velocidade
-            self.pos_x += velocidade_x
-            self.pos_y += velocidade_y
+
+            self.target_x += velocidade_x
+            self.target_y += velocidade_y
+
+            self.pos_x += (self.target_x - self.pos_x) * self.fator_i
+            self.pos_y += (self.target_y - self.pos_y) * self.fator_i
 
             if(len(self.comidinhas) < 100):            
                 if(r.randint(1,100) == 1):

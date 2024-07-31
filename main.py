@@ -1,9 +1,11 @@
 import src.jogo as src
 from src.utils import limpar
 from tela_inicial import TelaInicial
+fazer_tela = True
 def main():
     limpar()
-    TelaInicial()
+    if fazer_tela: #depois coloco de volta, preguiça de ficar apertando enter
+        TelaInicial()
     game_loop = src.GameLoop()
     game_loop.run()
     print("Fim do jogo")

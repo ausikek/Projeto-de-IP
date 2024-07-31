@@ -10,3 +10,4 @@ COMIDA = (255, 0, 0) #vermelho
 #Radius
 RAIO_COMIDA = 1000
 RAIO_INICIAL_JOGADOR = 25
+
