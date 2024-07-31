@@ -1,9 +1,9 @@
 import pygame
 import random as r
 from .utils import *
-from .settings import LAR, ALT, FUNDO, PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR
-from .game_objects import Player, Food
-
+from .config import LAR, ALT, FUNDO, PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR
+from .objetos import Player, Food
+from .graficos import Graficos
 class GameLoop:
     
     def __init__(self):
@@ -14,6 +14,7 @@ class GameLoop:
         self.jogando = True
         self.comidinhas = []
         self.animacoes = []
+        self.g = Graficos()
 
 
     def run(self):
@@ -21,13 +22,15 @@ class GameLoop:
         pygame.display.set_caption("Buraco negro")
 
         tela = pygame.display.set_mode((LAR, ALT))
+        
+        self.g.setup(tela)
 
         while self.jogando:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.jogando = False
                 
-            player = Player(LAR // 2, ALT // 2, self.raio, PLAYER)
+            player = Player(self.raio, PLAYER)
             
             velocidade_x = 0
             velocidade_y = 0
@@ -57,14 +60,18 @@ class GameLoop:
                     comida_x = r.randint(int(self.pos_x) - RAIO_COMIDA, int(self.pos_x) + RAIO_COMIDA)
                     comida_y = r.randint(int(self.pos_y) - RAIO_COMIDA, int(self.pos_y) + RAIO_COMIDA)
                     comida_pos = (comida_x, comida_y)
-                    self.comidinhas.append([comida_pos, r.randint(1, int(self.raio * 0.4))])
+                    nova_comida = Food(comida_x, comida_y, r.randint(1, int(self.raio * 0.4)), COMIDA)
+                    self.comidinhas.append(nova_comida)
         
             tela.fill(FUNDO)
-            player.draw(tela)
+            #Antes de desenhar, atualizar os offsets
+            self.g.update(self.pos_x, self.pos_y)
+
+            player.draw(self.g)
 
             for animacao in self.animacoes:
-                food_anim = Food(LAR // 2, ALT // 2, animacao, COMIDA)
-                food_anim.draw_anim(tela)
+                food_anim = Food(LAR // 2, ALT // 2, animacao, COMIDA) #remover isso aqui depois por motivos de cleanup, mas nao tem motivo imediato alem de reduzir uso de memoria, a nao ser que o python ja va jogar essa classe no lixo no tick seguinte, mas acho que nao eh o caso!
+                food_anim.draw_anim(self.g)
                 
                 self.animacoes[self.animacoes.index(animacao)] -= 0.025
                 animacao -= 0.025
@@ -72,18 +79,16 @@ class GameLoop:
                 if(animacao == 1):
                     self.animacoes.remove(animacao)
 
-            for comida in self.comidinhas:
-                food_spawn = Food(comida[0][0], comida[0][1], comida[1], COMIDA)
-
-                dx = food_spawn.x - self.pos_x
-                dy = food_spawn.y - self.pos_y
+            for comida in self.comidinhas: #Pq criar uma nova classe "Food" a cada tick? Não entendi a vantagem, então vou tirar
+                dx = comida.x - self.pos_x
+                dy = comida.y - self.pos_y
                 pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
 
                 if pitagoras < self.raio:
                     self.comidinhas.remove(comida)
-                    self.animacoes.append(food_spawn.radius)
-                    self.raio += food_spawn.radius * 0.1
+                    self.animacoes.append(comida.radius)
+                    self.raio += comida.radius * 0.1
                 
-                food_spawn.draw_spawn(tela, self.pos_x, self.pos_y)
+                comida.draw_spawn(self.g)
 
             pygame.display.flip()
