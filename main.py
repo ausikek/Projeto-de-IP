@@ -26,5 +26,6 @@ Todo:
 [X] - Tela inicial
 [ ] - Quao maior tu ficar, mais dispersas as comidas ficam
 [ ] - Adicionar em graficos.py um load_image, pra facilitar uso de imagem
+[X] - Notificação no canto superior esquerdo
 
 """
