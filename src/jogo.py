@@ -43,7 +43,7 @@ class GameLoop:
             
 
             #Timers
-            if self.tutorial > 2: 
+            if self.tutorial < 2: 
                 agora = time.time()
                 if(agora - self.tempo_inicial > 6 * (self.tutorial + 1)):
                     if self.tutorial == 0:
@@ -115,7 +115,7 @@ class GameLoop:
                     if pitagoras > RAIO_COMIDA:
                         self.comidinhas.remove(comida) #deletar a comida que tiver longe do cara
                 except:
-                    pass
+                    pass #por nenhum motivo, isso aqui deu errado uma vez isolada, nao faco ideia como, literal n tinha como, mas vou deicxar isso aqui
                 comida.draw_spawn(self.g)
 
             if self.notif != None:
