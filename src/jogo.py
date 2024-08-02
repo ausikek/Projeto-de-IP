@@ -8,7 +8,7 @@ import time
 
 class GameLoop:
     
-    def __init__(self):
+    def __init__(self, background = None):
         self.pos_x = LAR // 2
         self.pos_y = ALT // 2
         self.target_x = self.pos_x  
@@ -23,6 +23,7 @@ class GameLoop:
         self.notif:Notification = None
         self.tempo_inicial = time.time()
         self.tutorial = 0 #Steps do tutorial
+        self.background = background
 
     def run(self):
         pygame.init()
@@ -35,7 +36,7 @@ class GameLoop:
         self.notif = Notification("Boa sorte!")
 
         player = Player(self.raio, PLAYER)
-
+        
         while self.jogando:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -88,11 +89,16 @@ class GameLoop:
                     nova_comida = Food(comida_x, comida_y, r.randint(1, int(self.raio * 0.4)), COMIDA)
                     if(r.randint(1,5) == 5):nova_comida.info["textura"] = "tigrinho"
                     self.comidinhas.append(nova_comida)
-        
-            tela.fill(FUNDO)
+
             #Antes de desenhar, atualizar os offsets
             self.g.update(self.pos_x, self.pos_y)
-            
+
+            tela.fill(FUNDO)
+
+            if self.background != None:
+                tamanho = self.g.texturas[self.background].get_size()
+                self.g.textura(tamanho[0] // 2, tamanho[1] // 2, self.background)
+
             player.draw(self.g)
 
             for food_anim in self.animacoes:
@@ -123,5 +129,4 @@ class GameLoop:
                 self.notif.alterar_opacidade(0.0003)
                 if self.notif.pegar_opacidade() < 0.005:
                     self.notif = None
-            
             pygame.display.flip()
