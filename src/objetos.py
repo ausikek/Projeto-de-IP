@@ -6,7 +6,7 @@ class Notification: #Utilizar isso aqui também como um "mini tutorial". Ter not
     # "Boa sorte!" no início
     # "Cuidado com a bomba nseique" quando a primeira bomba spawnar ou entrar no field of view do player
     # entre outros usos ai
-    def __init__(self, texto, cor = (255,255,255)):
+    def __init__(self, texto, cor = (0,0,0)):
         self.text = texto
         self.opacity = 1.0
         self.fonte = pygame.font.Font(None, 36)
@@ -34,13 +34,16 @@ class Notification: #Utilizar isso aqui também como um "mini tutorial". Ter not
 
 class Player:
 
-    def __init__(self, radius, color): #não tem necessidade de definir player posx e posy, uma vez que nunca muda
+    def __init__(self, radius, color): 
         self.radius = radius
         self.color = color
 
 
-    def draw(self, g:Graficos):
-        g.circle(self.color, self.radius, LAR // 2, ALT // 2, False)
+    def draw(self, g:Graficos, tigrinho = False):
+        if tigrinho:
+            g.textura(LAR // 2, ALT // 2, "tigrinho", int(self.radius * 2), int(self.radius * 2), False)
+        else:
+            g.circle(self.color, self.radius, LAR // 2, ALT // 2, False)
        # pygame.draw.circle(surface, self.color, (int(self.x), int(self.y)), int(self.radius))
 
 
@@ -51,11 +54,17 @@ class Food:
             self.y = y
             self.radius = radius
             self.color = color
+            self.info = { "textura" : None }
+            self.animacao = 1
 
         def draw_anim(self, g:Graficos):
-            g.circle(self.color, self.radius, int(self.x), int(self.y), False)
-            #pygame.draw.circle(surface, self.color, (int(self.x), int(self.y)), int(self.radius))
+            if self.info["textura"] != None:
+                g.textura(LAR // 2, ALT // 2, self.info['textura'], int(self.radius * 2), int(self.radius * 2), False)
+            else:
+                g.circle(self.color, self.radius, LAR // 2, ALT // 2, False)
 
         def draw_spawn(self, g:Graficos):
-            g.circle(self.color, self.radius, int(self.x), int(self.y)) 
-           # pygame.draw.circle(surface, self.color, (int(self.x - off_x) + LAR // 2, int(self.y - off_y) + ALT // 2), self.radius)
+            if self.info["textura"] != None:
+                g.textura(int(self.x), int(self.y), self.info['textura'], int(self.radius * 2), int(self.radius * 2))
+            else:
+                g.circle(self.color, self.radius, int(self.x), int(self.y)) 

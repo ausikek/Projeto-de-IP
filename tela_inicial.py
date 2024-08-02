@@ -32,7 +32,7 @@ class TelaInicial:
                 self.nao_iniciou = False
         
             tela.fill(BACKGROUND)
-            if((pygame.time.get_ticks() // 1000) % 2 == 0):
+            if((pygame.time.get_ticks() // 500) % 2 == 0):
                 tela.blit(image1, (0,0)) #A cada segundo troca
             else:
                 tela.blit(image2, (0,0))
