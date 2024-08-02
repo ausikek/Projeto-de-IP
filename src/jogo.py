@@ -8,14 +8,14 @@ import time
 
 class GameLoop:
     
-    def __init__(self):
+    def __init__(self, background = None):
         self.pos_x = LAR // 2
         self.pos_y = ALT // 2
         self.target_x = self.pos_x  
         self.target_y = self.pos_y 
         self.raio = RAIO_INICIAL_JOGADOR
-        self.velocidade = 0.2
-        self.fator_i = 0.01 #  SUAVIDADE DA INTERPOL
+        self.velocidade = 4.2
+        self.fator_i = 0.21 # #0.21  SUAVIDADE DA INTERPOL
         self.jogando = True
         self.comidinhas = []
         self.animacoes = []
@@ -23,6 +23,12 @@ class GameLoop:
         self.notif:Notification = None
         self.tempo_inicial = time.time()
         self.tutorial = 0 #Steps do tutorial
+        self.background = background
+        self.tamanho = (0,0)
+        self.clock = pygame.time.Clock() 
+        if self.background != None:
+            self.tamanho = self.g.texturas[self.background].get_size()
+        self.elapsedTicks = 0
 
     def run(self):
         pygame.init()
@@ -35,7 +41,7 @@ class GameLoop:
         self.notif = Notification("Boa sorte!")
 
         player = Player(self.raio, PLAYER)
-
+        
         while self.jogando:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -82,22 +88,26 @@ class GameLoop:
             self.pos_y += (self.target_y - self.pos_y) * self.fator_i
 
             if(len(self.comidinhas) < 100):            
-                if(r.randint(1,100) == 1):
+                if(r.randint(1,5) == 1):
                     comida_x = r.randint(int(self.pos_x) - RAIO_COMIDA, int(self.pos_x) + RAIO_COMIDA)
                     comida_y = r.randint(int(self.pos_y) - RAIO_COMIDA, int(self.pos_y) + RAIO_COMIDA)
                     nova_comida = Food(comida_x, comida_y, r.randint(1, int(self.raio * 0.4)), COMIDA)
                     if(r.randint(1,5) == 5):nova_comida.info["textura"] = "tigrinho"
                     self.comidinhas.append(nova_comida)
-        
-            tela.fill(FUNDO)
+
             #Antes de desenhar, atualizar os offsets
             self.g.update(self.pos_x, self.pos_y)
-            
+
+            tela.fill(FUNDO)
+
+            if self.background != None:
+                self.g.textura(self.tamanho[0] // 2, self.tamanho[1] // 2, self.background)
+
             player.draw(self.g)
 
             for food_anim in self.animacoes:
                 food_anim.draw_anim(self.g)
-                food_anim.radius -= 0.025
+                food_anim.radius -= 0.525
                 if(food_anim.radius < 1):
                     self.animacoes.remove(food_anim)
 
@@ -120,8 +130,11 @@ class GameLoop:
 
             if self.notif != None:
                 self.notif.draw(tela)
-                self.notif.alterar_opacidade(0.0003)
+                self.notif.alterar_opacidade(0.0063)
                 if self.notif.pegar_opacidade() < 0.005:
                     self.notif = None
-            
             pygame.display.flip()
+            if(self.elapsedTicks % 230 == 229): #230 sendo num arbitrario so pra n printar toda hora
+                print(f"{(self.elapsedTicks / (time.time() - self.tempo_inicial)):.2f} FPS")
+            self.elapsedTicks += 1
+            self.clock.tick(60)

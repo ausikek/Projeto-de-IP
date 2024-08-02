@@ -42,3 +42,5 @@ class TelaInicial:
 
 
 
+if __name__ == "__main__":
+    TelaInicial()
