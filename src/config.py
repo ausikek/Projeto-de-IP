@@ -8,6 +8,6 @@ PLAYER = (0,0,0) #preto
 COMIDA = (255, 0, 0) #vermelho
 
 #Radius
-RAIO_COMIDA = 1000
+RAIO_COMIDA = 500
 RAIO_INICIAL_JOGADOR = 25
 
