@@ -25,8 +25,8 @@ Peritech é um calouro do curso de Ciência da Computação do período de 2024.
 | bsb | Art Director | Sprites/áudio |
 | drb | Art Director | Design gráfico + Sprites |
 | jpgp | Quality Assurance | Identificação e correção de bugs |
-| tca | Lead Developer | Código principal do jogo e protótipo |
-| vbgm | Main Developer | Código principal do jogo e classes |
+| tca | Lead Developer | Código principal do jogo e protótipo/classes |
+| vbgm | Main Developer + Art Director | Classes + Sprites |
 
 ## Ferramentas, Frameworks e bibliotecas: 
 * Pygame
