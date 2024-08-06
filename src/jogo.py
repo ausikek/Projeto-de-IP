@@ -29,6 +29,7 @@ class GameLoop:
         if self.background != None:
             self.tamanho = self.g.texturas[self.background].get_size()
         self.elapsedTicks = 0
+        self.raio_comida = RAIO_COMIDA
 
     def run(self):
         pygame.init()
@@ -49,13 +50,19 @@ class GameLoop:
             
 
             #Timers
-            if self.tutorial < 2: 
+            if self.tutorial < 5: 
                 agora = time.time()
                 if(agora - self.tempo_inicial > 6 * (self.tutorial + 1)):
                     if self.tutorial == 0:
-                        self.notif = Notification("A cada bolinha vermelha que você absorve, você cresce.")
+                        self.notif = Notification("A cada objeto que você absorve, você cresce.")
                     elif self.tutorial == 1:
-                        self.notif = Notification("Seu objetivo é absorver o máximo de bolinhas vermelhas!")
+                        self.notif = Notification("Seu objetivo é absorver o máximo de objetos!")
+                    elif self.tutorial == 2:
+                        self.notif = Notification("Mas cuidado, nem todos são benéficos pra você!")
+                    elif self.tutorial == 3:
+                        self.notif = Notification("A qualquer custo, não pegue a bandeira de greve!")
+                    elif self.tutorial == 4:
+                        self.notif = Notification("E cuidado com os computadores que tiverem vírus!")
                     self.tutorial += 1
                 #depois adicionar mais prompts a medida que a gente for adicionando coisa ao jogo
 
@@ -88,10 +95,19 @@ class GameLoop:
             self.pos_y += (self.target_y - self.pos_y) * self.fator_i
 
             if(len(self.comidinhas) < 100):            
-                if(r.randint(1,5) == 1):
-                    comida_x = r.randint(int(self.pos_x) - RAIO_COMIDA, int(self.pos_x) + RAIO_COMIDA)
-                    comida_y = r.randint(int(self.pos_y) - RAIO_COMIDA, int(self.pos_y) + RAIO_COMIDA)
-                    nova_comida = Food(comida_x, comida_y, r.randint(1, int(self.raio * 0.4)), COMIDA)
+                if(r.randint(1,15) == 1):
+                    valida = False
+                    nova_comida:Food = None
+                    while not valida: 
+                        comida_x = r.randint(int(self.pos_x) - self.raio_comida, int(self.pos_x) + self.raio_comida)
+                        comida_y = r.randint(int(self.pos_y) - self.raio_comida, int(self.pos_y) + self.raio_comida)
+                        nova_comida = Food(comida_x, comida_y, r.randint(1, int(self.raio * 0.4)), COMIDA)
+                        dx = comida_x - self.pos_x
+                        dy = comida_y - self.pos_y
+                        pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
+                        if pitagoras > self.raio:
+                            #nao spawnou dentro fdo player logo ta tudo bem
+                            valida = True
                     if(r.randint(1,5) == 5):nova_comida.info["textura"] = "tigrinho"
                     self.comidinhas.append(nova_comida)
 
@@ -122,7 +138,7 @@ class GameLoop:
                     self.comidinhas.remove(comida)
                     self.raio = ((3.141 * (self.raio ** 2) + 3.141 * (comida.radius ** 2)) / 3.141) ** (1/2)
                 try:
-                    if pitagoras > RAIO_COMIDA:
+                    if pitagoras > self.raio_comida:
                         self.comidinhas.remove(comida) #deletar a comida que tiver longe do cara
                 except:
                     pass #por nenhum motivo, isso aqui deu errado uma vez isolada, nao faco ideia como, literal n tinha como, mas vou deicxar isso aqui
@@ -135,6 +151,7 @@ class GameLoop:
                     self.notif = None
             pygame.display.flip()
             if(self.elapsedTicks % 230 == 229): #230 sendo num arbitrario so pra n printar toda hora
-                print(f"{(self.elapsedTicks / (time.time() - self.tempo_inicial)):.2f} FPS")
+                print(f"{(self.elapsedTicks / (time.time() - self.tempo_inicial)):.2f} FPS | radius {player.radius}")
             self.elapsedTicks += 1
             self.clock.tick(60)
+            self.raio_comida = int(RAIO_COMIDA + player.radius)

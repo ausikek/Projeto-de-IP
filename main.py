@@ -16,8 +16,8 @@ if __name__ == "__main__":
 """
 Todo:
 
-[ ] - A cada comida o carinha fica mais rapido
-[ ] - Quao maior tu ficar, mais dispersas as comidas ficam
+[X] - Nao podem spawnar coisinhas dentro do jogador
+[X] - Quao maior tu ficar, mais dispersas as comidas ficam
 [ ] - Cutscene/historinha inicial
 [ ] - Vírus
 [X] - Texturas:
