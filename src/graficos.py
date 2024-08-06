@@ -40,3 +40,6 @@ class Graficos:
             pygame.draw.circle(self.tela, color, (int(x - self.off_x) + LAR // 2, int(y - self.off_y) + ALT // 2), raio * self.scale)
         else:
             pygame.draw.circle(self.tela, color, (int(x), int(y)), raio * self.scale)
+    def quadrado(self, x,y, color,tamanho):
+        quadrado = pygame.Rect(int(x - self.off_x) + LAR // 2,int(y - self.off_y) + ALT // 2,tamanho,tamanho)
+        pygame.draw.rect(self.tela, color, quadrado)

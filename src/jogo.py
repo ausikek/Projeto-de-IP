@@ -1,9 +1,10 @@
 import pygame
 import random as r
 from .utils import *
-from .config import LAR, ALT, FUNDO,  PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR
+from .config import LAR, ALT, FUNDO,  PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_JOGADOR, QUADRADO
 from .objetos import Player, Food, Notification
 from .graficos import Graficos
+from tela_final import TelaFinal
 import time 
 
 class GameLoop:
@@ -29,7 +30,22 @@ class GameLoop:
         if self.background != None:
             self.tamanho = self.g.texturas[self.background].get_size()
         self.elapsedTicks = 0
-        self.raio_comida = RAIO_COMIDA
+        self.raio_comida = RAIO_COMIDA  #disrtancia de renderizar as tiles
+
+    def desenhar_tiles(self):
+        tile_size = 50 
+        gap_size = 3    
+        
+        min_x = int((self.pos_x - self.raio_comida) // tile_size) * tile_size
+        max_x = int((self.pos_x + self.raio_comida) // tile_size) * tile_size
+        min_y = int((self.pos_y - self.raio_comida) // tile_size) * tile_size
+        max_y = int((self.pos_y + self.raio_comida) // tile_size) * tile_size
+
+        for x in range(min_x, max_x + tile_size, tile_size + gap_size):
+            for y in range(min_y, max_y + tile_size, tile_size + gap_size):
+                if ((x - self.pos_x) ** 2 + (y - self.pos_y) ** 2) ** 0.5 <= self.raio_comida:
+                    self.g.quadrado(x, y, QUADRADO, tile_size) 
+
 
     def run(self):
         pygame.init()
@@ -50,7 +66,7 @@ class GameLoop:
             
 
             #Timers
-            if self.tutorial < 5: 
+            if self.tutorial < 8: 
                 agora = time.time()
                 if(agora - self.tempo_inicial > 6 * (self.tutorial + 1)):
                     if self.tutorial == 0:
@@ -62,7 +78,13 @@ class GameLoop:
                     elif self.tutorial == 3:
                         self.notif = Notification("A qualquer custo, não pegue a bandeira de greve!")
                     elif self.tutorial == 4:
-                        self.notif = Notification("E cuidado com os computadores que tiverem vírus!")
+                        self.notif = Notification("E cuidado com os computadores que tiverem vírus! Eles vão reduzir seu tamanho.")
+                    elif self.tutorial == 5:
+                        self.notif = Notification("Computadores com vírus e bandeiras de greve não podem aparecer tão perto de você.")
+                    elif self.tutorial == 6:
+                        self.notif = Notification("Além disso, eles só aparecerão se você tiver pelo menos um certo tamanho.")
+                    elif self.tutorial == 7:
+                        self.notif = Notification("A medida que você cresce, os objetos irão tender a se espalhar.")
                     self.tutorial += 1
                 #depois adicionar mais prompts a medida que a gente for adicionando coisa ao jogo
 
@@ -101,12 +123,12 @@ class GameLoop:
                     while not valida: 
                         comida_x = r.randint(int(self.pos_x) - self.raio_comida, int(self.pos_x) + self.raio_comida)
                         comida_y = r.randint(int(self.pos_y) - self.raio_comida, int(self.pos_y) + self.raio_comida)
-                        raio = max(15, r.randint(1, int(self.raio * 0.4)))
+                        raio = max(20, r.randint(1, int(self.raio * 0.4)))
                         nova_comida = Food(comida_x, comida_y, raio, COMIDA)
                         dx = comida_x - self.pos_x
                         dy = comida_y - self.pos_y
                         pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
-                        if pitagoras > self.raio:
+                        if pitagoras > (self.raio * 1.5):
                             #nao spawnou dentro fdo player logo ta tudo bem
                             valida = True
                     #Descobrir o tipo de comidinha
@@ -130,11 +152,10 @@ class GameLoop:
 
             tela.fill(FUNDO)
 
-            if self.background != None:
-                self.g.textura(self.tamanho[0] // 2, self.tamanho[1] // 2, self.background)
+            self.desenhar_tiles()
 
             player.draw(self.g)
-
+            
             for food_anim in self.animacoes:
                 food_anim.draw_anim(self.g)
                 food_anim.radius -= 0.525
@@ -151,9 +172,10 @@ class GameLoop:
                     self.animacoes.append(comida)
                     self.comidinhas.remove(comida)
                     if(comida.info["textura"] == "virus"):
-                        player.radius *= 1/2
+                        self.raio *= 1/2
                     if(comida.info["textura"] == "greve"):
-                        exit() #fazer perder
+                        self.jogando = False
+                        TelaFinal()
                     else:
                         self.raio = ((3.141 * (self.raio ** 2) + 3.141 * (comida.radius ** 2)) / 3.141) ** (1/2)
                 try:
@@ -173,4 +195,4 @@ class GameLoop:
                 print(f"{(self.elapsedTicks / (time.time() - self.tempo_inicial)):.2f} FPS | radius {player.radius}")
             self.elapsedTicks += 1
             self.clock.tick(60)
-            self.raio_comida = int(RAIO_COMIDA + player.radius)
+            self.raio_comida = int(RAIO_COMIDA + (self.raio * 2))

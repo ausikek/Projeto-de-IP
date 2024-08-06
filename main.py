@@ -18,7 +18,6 @@ Todo:
 
 [X] - Nao podem spawnar coisinhas dentro do jogador
 [X] - Quao maior tu ficar, mais dispersas as comidas ficam
-[ ] - Cutscene/historinha inicial
 [X] - Vírus
 [X] - Texturas:
     [X] - Mesa
@@ -28,11 +27,14 @@ Todo:
     [X] - Greve
     [X] - Game over tela
 [X] - Greve
-[ ] - Sistema de estágio, usando um coeficiente de dificuldade que pode aumentar infinitamente se tu tiver sobrevivendo 
 [X] - Prompts do tutorial
-[ ] - Implementar tela de game over
-[ ] - Implementar um cronômetro
+[X] - Implementar tela de game over
+[X] - Background que simula o chão do grad 5 gerado automaticamente
+
+[ ] - Cutscene/historinha inicial
+[ ] - Sistema de estágio, usando um coeficiente de dificuldade que pode aumentar infinitamente se tu tiver sobrevivendo
+[ ] - Implementar um cronômetro 
 [ ] - Sistema de passar de estagio
-[ ] - Background que simula o chão do grad 5 gerado automaticamente
+ 
 
 """

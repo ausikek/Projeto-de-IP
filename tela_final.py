@@ -7,19 +7,19 @@ BACKGROUND = (0,0,0) # preto, mas isso nao vai nem aparecer
 
 #Não importar outros modulos aqui, tentar deixar isso aqui o mais "portavel" possivel pela simplicidade
 
-class TelaInicial:
+class TelaFinal:
     def __init__(self):
         self.nao_iniciou = True
         self.run()
 
     def run(self):
         pygame.init()
-        pygame.display.set_caption("Tela inicial")
+        pygame.display.set_caption("Tela final")
 
         tela = pygame.display.set_mode((LAR, ALT))
         i = 0
-        image1 = pygame.image.load(os.path.join('assets', '1.png'))
-        image2 = pygame.image.load(os.path.join('assets', '2.png'))
+        image1 = pygame.image.load(os.path.join('assets', 'g2.png'))
+        image2 = pygame.image.load(os.path.join('assets', 'g1.png'))
         while self.nao_iniciou:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -42,4 +42,4 @@ class TelaInicial:
 
 
 if __name__ == "__main__":
-    TelaInicial()
+    TelaFinal()
