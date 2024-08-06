@@ -5,7 +5,14 @@ from .config import LAR, ALT
 class Graficos:
 
     def __init__(self):
-        self.texturas = {"tigrinho" : pygame.image.load(os.path.join('assets', f'boss_final.jpg'))}
+        self.texturas = {
+            "tigrinho" : pygame.image.load(os.path.join('assets', f'boss_final.jpg')),
+            "mesa" : pygame.image.load(os.path.join('assets', f'mesa.png')),
+            "cadeira" : pygame.image.load(os.path.join('assets', f'cadeira.png')),
+            "computador" : pygame.image.load(os.path.join('assets', f'pc_n.png')),
+            "virus" : pygame.image.load(os.path.join('assets', f'pc.png')),
+            "greve" : pygame.image.load(os.path.join('assets', f'greve.png')),
+            }
         self.scale = 1
 
     def setup(self, tela):

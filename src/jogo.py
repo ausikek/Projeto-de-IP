@@ -34,7 +34,7 @@ class GameLoop:
     def run(self):
         pygame.init()
         pygame.display.set_caption("Buraco negro")
-
+         
         tela = pygame.display.set_mode((LAR, ALT))
         
         self.g.setup(tela)
@@ -101,14 +101,28 @@ class GameLoop:
                     while not valida: 
                         comida_x = r.randint(int(self.pos_x) - self.raio_comida, int(self.pos_x) + self.raio_comida)
                         comida_y = r.randint(int(self.pos_y) - self.raio_comida, int(self.pos_y) + self.raio_comida)
-                        nova_comida = Food(comida_x, comida_y, r.randint(1, int(self.raio * 0.4)), COMIDA)
+                        raio = max(15, r.randint(1, int(self.raio * 0.4)))
+                        nova_comida = Food(comida_x, comida_y, raio, COMIDA)
                         dx = comida_x - self.pos_x
                         dy = comida_y - self.pos_y
                         pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
                         if pitagoras > self.raio:
                             #nao spawnou dentro fdo player logo ta tudo bem
                             valida = True
-                    if(r.randint(1,5) == 5):nova_comida.info["textura"] = "tigrinho"
+                    #Descobrir o tipo de comidinha
+                    if(r.randint(1,5) == 1 and player.radius > 60):
+                        if(r.randint(1,8) == 1):
+                            nova_comida.info["textura"] = "greve"
+                        else:
+                            nova_comida.info["textura"] = "virus"
+                    else:
+                        resultado = r.randint(1,3)
+                        if resultado == 1:
+                            nova_comida.info["textura"] = "computador" #pc
+                        elif resultado == 2:
+                            nova_comida.info["textura"] = "mesa"
+                        elif resultado == 3:
+                            nova_comida.info["textura"] = "cadeira"
                     self.comidinhas.append(nova_comida)
 
             #Antes de desenhar, atualizar os offsets
@@ -133,10 +147,15 @@ class GameLoop:
                 dy = comida.y - self.pos_y
                 pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
 
-                if pitagoras < self.raio:
+                if pitagoras < self.raio and comida.radius < player.radius:
                     self.animacoes.append(comida)
                     self.comidinhas.remove(comida)
-                    self.raio = ((3.141 * (self.raio ** 2) + 3.141 * (comida.radius ** 2)) / 3.141) ** (1/2)
+                    if(comida.info["textura"] == "virus"):
+                        player.radius *= 1/2
+                    if(comida.info["textura"] == "greve"):
+                        exit() #fazer perder
+                    else:
+                        self.raio = ((3.141 * (self.raio ** 2) + 3.141 * (comida.radius ** 2)) / 3.141) ** (1/2)
                 try:
                     if pitagoras > self.raio_comida:
                         self.comidinhas.remove(comida) #deletar a comida que tiver longe do cara

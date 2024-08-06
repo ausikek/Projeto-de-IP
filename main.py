@@ -19,7 +19,7 @@ Todo:
 [X] - Nao podem spawnar coisinhas dentro do jogador
 [X] - Quao maior tu ficar, mais dispersas as comidas ficam
 [ ] - Cutscene/historinha inicial
-[ ] - Vírus
+[X] - Vírus
 [X] - Texturas:
     [X] - Mesa
     [X] - Cadeira
@@ -27,9 +27,9 @@ Todo:
     [X] - Computador
     [X] - Greve
     [X] - Game over tela
-[ ] - Greve
+[X] - Greve
 [ ] - Sistema de estágio, usando um coeficiente de dificuldade que pode aumentar infinitamente se tu tiver sobrevivendo 
-[ ] - Prompts do tutorial
+[X] - Prompts do tutorial
 [ ] - Implementar tela de game over
 [ ] - Implementar um cronômetro
 [ ] - Sistema de passar de estagio
