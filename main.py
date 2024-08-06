@@ -1,12 +1,12 @@
 import src.jogo as src
 from src.utils import limpar
-from tela_inicial import TelaInicial
+import tela_inicial
 fazer_tela = True
 def main():
     limpar()
     if fazer_tela:
-        TelaInicial()
-    game_loop = src.GameLoop() #Executar isso uma vez pra cada estagio
+        tela_inicial.main()
+    game_loop = src.GameLoop(1) #Executar isso uma vez pra cada estagio
     game_loop.run()
     print("Fim do jogo")
 
@@ -14,21 +14,29 @@ if __name__ == "__main__":
     main()
 
 """
-
 Todo:
 
-[X] - graficos.py
-[ ] - A cada comida o carinha fica mais rapido
-[X] - Interpolação de movimento
-[ ] - Adicionar uma bombinha, pequena, que fica andando caoticamente
-[ ] - Adicionar uma bomba um pouco maior e mais lenta que diminui teu tamanho
-[X] - Tela inicial
-[ ] - Quao maior tu ficar, mais dispersas as comidas ficam
-[X] - Suporte a uma imagem de background
-[ ] - Restringir o movimento do player a apenas dentro do background caso tenha background
-[X] - Adicionar em graficos.py um load_image, pra facilitar uso de imagem
-[X] - Notificação no canto superior esquerdo
-[X] - Adicionar ao radius algo equivalente ao q tu realmente consumiu
-[X] - Suporte a comidas terem texturas própias e outras informações própias
+[X] - Nao podem spawnar coisinhas dentro do jogador
+[X] - Quao maior tu ficar, mais dispersas as comidas ficam
+[X] - Vírus
+[X] - Texturas:
+    [X] - Mesa
+    [X] - Cadeira
+    [X] - Vírus
+    [X] - Computador
+    [X] - Greve
+    [X] - Game over tela
+[X] - Greve
+[X] - Prompts do tutorial
+[X] - Implementar tela de game over
+[X] - Background que simula o chão do grad 5 gerado automaticamente
+
+[X] - Cutscene/historinha inicial
+[X] - Sistema de estágio, usando um coeficiente de dificuldade que pode aumentar infinitamente se tu tiver sobrevivendo
+[X] - Sistema de passar de estagio
+
+[X] - Implementar um cronômetro 
+[X] - Negocios do mal se moverem levemente em estagios >= 2 
+
 
 """
