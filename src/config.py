@@ -1,6 +1,6 @@
 #Screen Resolution
-LAR = 1600
-ALT = 900
+LAR = 1200
+ALT = 700
 
 ##Colors
 FUNDO = (200, 200, 200) #cinza

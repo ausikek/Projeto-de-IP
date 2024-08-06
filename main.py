@@ -1,12 +1,12 @@
 import src.jogo as src
 from src.utils import limpar
-from tela_inicial import TelaInicial
+import tela_inicial
 fazer_tela = True
 def main():
     limpar()
     if fazer_tela:
-        TelaInicial()
-    game_loop = src.GameLoop() #Executar isso uma vez pra cada estagio
+        tela_inicial.main()
+    game_loop = src.GameLoop(1) #Executar isso uma vez pra cada estagio
     game_loop.run()
     print("Fim do jogo")
 
@@ -31,10 +31,12 @@ Todo:
 [X] - Implementar tela de game over
 [X] - Background que simula o chão do grad 5 gerado automaticamente
 
-[ ] - Cutscene/historinha inicial
-[ ] - Sistema de estágio, usando um coeficiente de dificuldade que pode aumentar infinitamente se tu tiver sobrevivendo
-[ ] - Implementar um cronômetro 
-[ ] - Sistema de passar de estagio
- 
+[X] - Cutscene/historinha inicial
+[X] - Sistema de estágio, usando um coeficiente de dificuldade que pode aumentar infinitamente se tu tiver sobrevivendo
+[X] - Sistema de passar de estagio
+
+[X] - Implementar um cronômetro 
+[X] - Negocios do mal se moverem levemente em estagios >= 2 
+
 
 """

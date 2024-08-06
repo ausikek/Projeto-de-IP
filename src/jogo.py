@@ -9,13 +9,14 @@ import time
 
 class GameLoop:
     
-    def __init__(self, background = None):
+    def __init__(self, estagio, background = None):
+        self.estagio = estagio
         self.pos_x = LAR // 2
         self.pos_y = ALT // 2
         self.target_x = self.pos_x  
         self.target_y = self.pos_y 
         self.raio = RAIO_INICIAL_JOGADOR
-        self.velocidade = 4.2
+        self.velocidade = 4.2 
         self.fator_i = 0.21 # #0.21  SUAVIDADE DA INTERPOL
         self.jogando = True
         self.comidinhas = []
@@ -31,6 +32,11 @@ class GameLoop:
             self.tamanho = self.g.texturas[self.background].get_size()
         self.elapsedTicks = 0
         self.raio_comida = RAIO_COMIDA  #disrtancia de renderizar as tiles
+        self.font = None
+        self.estagio_opacity = 255
+        self.estagio_timer = time.time()
+        self.estagio_duration = 5 
+        self.tempo_left = 120
 
     def desenhar_tiles(self):
         tile_size = 50 
@@ -59,6 +65,8 @@ class GameLoop:
 
         player = Player(self.raio, PLAYER)
         
+        self.font = pygame.font.Font(None, 36)
+       
         while self.jogando:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -66,27 +74,28 @@ class GameLoop:
             
 
             #Timers
-            if self.tutorial < 8: 
-                agora = time.time()
-                if(agora - self.tempo_inicial > 6 * (self.tutorial + 1)):
-                    if self.tutorial == 0:
-                        self.notif = Notification("A cada objeto que você absorve, você cresce.")
-                    elif self.tutorial == 1:
-                        self.notif = Notification("Seu objetivo é absorver o máximo de objetos!")
-                    elif self.tutorial == 2:
-                        self.notif = Notification("Mas cuidado, nem todos são benéficos pra você!")
-                    elif self.tutorial == 3:
-                        self.notif = Notification("A qualquer custo, não pegue a bandeira de greve!")
-                    elif self.tutorial == 4:
-                        self.notif = Notification("E cuidado com os computadores que tiverem vírus! Eles vão reduzir seu tamanho.")
-                    elif self.tutorial == 5:
-                        self.notif = Notification("Computadores com vírus e bandeiras de greve não podem aparecer tão perto de você.")
-                    elif self.tutorial == 6:
-                        self.notif = Notification("Além disso, eles só aparecerão se você tiver pelo menos um certo tamanho.")
-                    elif self.tutorial == 7:
-                        self.notif = Notification("A medida que você cresce, os objetos irão tender a se espalhar.")
-                    self.tutorial += 1
-                #depois adicionar mais prompts a medida que a gente for adicionando coisa ao jogo
+            if self.estagio == 1:
+                if self.tutorial < 8: 
+                    agora = time.time()
+                    if(agora - self.tempo_inicial > 6 * (self.tutorial + 1)):
+                        if self.tutorial == 0:
+                            self.notif = Notification("A cada objeto que você absorve, você cresce.")
+                        elif self.tutorial == 1:
+                            self.notif = Notification("Seu objetivo é absorver o máximo de objetos!")
+                        elif self.tutorial == 2:
+                            self.notif = Notification("Mas cuidado, nem todos são benéficos pra você!")
+                        elif self.tutorial == 3:
+                            self.notif = Notification("A qualquer custo, não pegue a bandeira de greve!")
+                        elif self.tutorial == 4:
+                            self.notif = Notification("E cuidado com os computadores que tiverem vírus! Eles vão reduzir seu tamanho.")
+                        elif self.tutorial == 5:
+                            self.notif = Notification("Computadores com vírus e bandeiras de greve não podem aparecer tão perto de você.")
+                        elif self.tutorial == 6:
+                            self.notif = Notification("Além disso, eles só aparecerão se você tiver pelo menos um certo tamanho.")
+                        elif self.tutorial == 7:
+                            self.notif = Notification("A medida que você cresce, os objetos irão tender a se espalhar.")
+                        self.tutorial += 1
+                    #depois adicionar mais prompts a medida que a gente for adicionando coisa ao jogo
 
             player.radius = self.raio
             
@@ -117,7 +126,7 @@ class GameLoop:
             self.pos_y += (self.target_y - self.pos_y) * self.fator_i
 
             if(len(self.comidinhas) < 100):            
-                if(r.randint(1,15) == 1):
+                if(r.randint(1,15) <= (1 * self.estagio)):
                     valida = False
                     nova_comida:Food = None
                     while not valida: 
@@ -132,7 +141,7 @@ class GameLoop:
                             #nao spawnou dentro fdo player logo ta tudo bem
                             valida = True
                     #Descobrir o tipo de comidinha
-                    if(r.randint(1,5) == 1 and player.radius > 60):
+                    if(r.randint(1,1000) < min(200 * self.estagio, 800) and player.radius > (60 / self.estagio)):
                         if(r.randint(1,8) == 1):
                             nova_comida.info["textura"] = "greve"
                         else:
@@ -164,6 +173,16 @@ class GameLoop:
 
             
             for comida in self.comidinhas:
+                if self.estagio > 1:
+                    if comida.info["textura"] == "virus" or comida.info["textura"] == "greve":
+                        x_sinal = r.randint(1,2)
+                        y_sinal = r.randint(1,2)
+                        if(x_sinal == 2):
+                            x_sinal = -1
+                        if y_sinal == 2:
+                            y_sinal = -1
+                        comida.x += (r.randint(1,1000 * self.estagio) / 1000) * x_sinal
+                        comida.y += (r.randint(1,1000 * self.estagio) / 1000) * y_sinal
                 dx = comida.x - self.pos_x
                 dy = comida.y - self.pos_y
                 pitagoras = ((dx ** 2) + (dy ** 2)) ** 0.5
@@ -187,12 +206,35 @@ class GameLoop:
 
             if self.notif != None:
                 self.notif.draw(tela)
-                self.notif.alterar_opacidade(0.0063)
+                self.notif.alterar_opacidade(0.0023)
                 if self.notif.pegar_opacidade() < 0.005:
                     self.notif = None
+            
+            current_time = time.time()
+            if current_time - self.estagio_timer > self.estagio_duration:
+                self.estagio_opacity = max(0, self.estagio_opacity - 2)  #diminui a opacidade gradualmente
+
+            if self.estagio_opacity > 0:
+                estagio_text = self.font.render(f"Estágio: {self.estagio}", True, (0, 0, 0))
+                estagio_text.set_alpha(self.estagio_opacity)
+                rect = estagio_text.get_rect(center=(LAR // 2, 36))
+                tela.blit(estagio_text, rect)
+            if self.raio >= min(200, 100 + (50 * (self.estagio - 1))):
+                #ganhou
+                self.jogando = False
+                a = GameLoop(self.estagio + 1)
+                a.run()
+            
+            estagio_text = self.font.render(f"{displaysegundos(int(self.tempo_left))}", True, (0, 0, 0))
+            tela.blit(estagio_text, (960, 80))
+            if self.tempo_left <= 0:
+                self.jogando = False
+                TelaFinal()
             pygame.display.flip()
-            if(self.elapsedTicks % 230 == 229): #230 sendo num arbitrario so pra n printar toda hora
-                print(f"{(self.elapsedTicks / (time.time() - self.tempo_inicial)):.2f} FPS | radius {player.radius}")
+            
             self.elapsedTicks += 1
             self.clock.tick(60)
             self.raio_comida = int(RAIO_COMIDA + (self.raio * 2))
+            self.tempo_left = max(30, 120 - (30 * (self.estagio - 1))) - (current_time - self.tempo_inicial)
+            
+

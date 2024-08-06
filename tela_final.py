@@ -29,6 +29,8 @@ class TelaFinal:
 
             if(keys[pygame.K_RETURN] or keys[pygame.KSCAN_KP_ENTER]):
                 self.nao_iniciou = False
+                import main
+                main.main()
         
             tela.fill(BACKGROUND)
             if((pygame.time.get_ticks() // 500) % 2 == 0):
