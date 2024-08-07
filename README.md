@@ -6,8 +6,13 @@
 Peritech é um calouro do curso de Ciência da Computação do período de 2024.1 do CIn UFPE. Durante um fatídico dia, em que estudava operações matemáticas em Python no GRAD5, Peritech efetuou uma divisão por zero, que por meio de mecanismos físicos ainda desconhecidos, gerou um Buraco Negro que começou a consumir o CIn de dentro pra fora. 
 
 ## Capturas de Tela
-<div style="display: flex; justify-content: space-around;">
-  <p>Capturas de Tela</p>
+<div style="display: flex">
+  <p>
+      <img src="https://github.com/user-attachments/assets/a71c2905-6650-45a3-8273-4a6df6963751" width="570" height="570">
+      <img src="https://github.com/user-attachments/assets/ac9d598b-83ed-48a3-9a5e-89a4751ed0f8" width="570" height="570">
+      <img src="https://github.com/user-attachments/assets/f0da958f-1f87-4ce7-bf8b-d6f7f5015996" width="570" height="570">
+      <img src="https://github.com/user-attachments/assets/242cfef3-2dff-47c4-91f9-c0c92ff745c5" width="570" height="570">
+</p>
 </div>
 
 ## Membros: 
