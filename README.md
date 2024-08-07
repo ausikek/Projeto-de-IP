@@ -46,16 +46,27 @@ O código é modularizado e dividido em branches diferentes. Utilizamos a branch
 Além disso, dividimos o código com arquivos diferentes para cada tipo de funcionalidade, como loop principal, configurações, entre outros.
 O jogo é executado através de `main.py`.
 ./ 
+
 ├── src/ 
+
 │   ├── config.py 
+
 │   ├── graficos.py 
+
 │   ├── jogo.py 
+
 │   ├── objetos.py 
+
 │   └── utils.py 
+
 ├── assets/ 
+
 ├── main.py 
+
 ├── tela_final.py 
+
 └── tela_inicial.py 
+
 Hierarquia e Objetos Principais 
 
 `main.py`: Ponto de entrada do jogo
