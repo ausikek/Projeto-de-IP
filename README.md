@@ -30,7 +30,7 @@ Peritech é um calouro do curso de Ciência da Computação do período de 2024.
 | :---: | :--: |:--:|
 | bonof | Project Lead | Refatoraçao do Código e Repositório Git |
 | bsb | Art Director | Sprites/áudio |
-| drb | Art Director | Design gráfico + Sprites |
+| drb | Art Director + Project Lead | Design gráfico + Sprites + Organização final |
 | jpgp | Quality Assurance | Identificação e correção de bugs |
 | tca | Lead Developer | Código principal do jogo e protótipo/classes |
 | vbgm | Main Developer + Art Director | Classes + Sprites |
@@ -65,46 +65,35 @@ O jogo é executado através de `main.py`.
 
 ├── main.py 
 
+├── musica.wav
+
 ├── tela_final.py 
 
-├── final_vencedor.py
+├── final_ganhador.py
 
 └── tela_inicial.py 
 
-Hierarquia e Objetos Principais 
+Organização e estruturação do código 
 
-`main.py`: Ponto de entrada do jogo
-Objeto principal: `GameLoop`
+`main.py`: Ponto de entrada do jogo -> objeto principal: `GameLoop`
 
+`tela_inicial.py`: Gerencia a tela inicial e a tela de história -> objetos: `TelaInicial` e `TelaHistoria`
 
-`tela_inicial.py`: Gerencia a tela inicial e a tela de história
-Objetos: `TelaVitoria`
+`final_ganhador.py`: Gerencia a tela de vitória -> objeto: `TelaVitoria`
 
-`final_ganhador.py`: Gerencia a tela de vitória
-Objetos: `TelaInicial`, `TelaHistoria`
+`musica.wav`: Gerencia a parte sonora do jogo.
 
-`tela_final.py`: Gerencia a tela final do jogo
-Objeto: `TelaFinal`
+`tela_final.py`: Gerencia a tela final do jogo -> objeto: `TelaFinal`
 
-
-`src/jogo.py`: Contém a lógica principal do jogo
-Classe principal: `GameLoop`
-
-
-`src/objetos.py`: Define os objetos do jogo
-Classes: `Notification`, `Player`, `Food`
-
-
-`src/graficos.py`: Gerencia a renderização gráfica
-Classe principal: `Graficos`
-
-
-`src/config.py`: Armazena configurações globais do jogo
-`src/utils.py`: Contém funções utilitárias
 
 ## Análise individual dos arquivos
-## `src/graficos.py` - Gerencia a renderização gráfica do jogo.
-Classe principal: `Graficos`
+## `src/config.py`
+
+Armazena configurações globais do jogo
+
+## `src/graficos.py` 
+
+Gerencia a renderização gráfica do jogo.
 
 Métodos:
 
@@ -117,8 +106,9 @@ Métodos:
 
 
 
-## `src/jogo.py` - Contém a lógica principal do jogo.
-Classe principal: `GameLoop`
+## `src/jogo.py` 
+
+Contém a lógica principal do jogo, com os movimentos do jogador, spawn de comida, crescimento do jogador, etc.
 
 Métodos:
 
@@ -126,27 +116,15 @@ Métodos:
 `desenhar_tiles()`: Desenha o grid de fundo
 `run()`: Loop principal do jogo
 
-Funcionalidades:
 
-Gerencia o movimento do jogador
-Spawna e gerencia objetos (comida)
-Controla colisões e crescimento do jogador
-Implementa sistema de estágios e temporizador
+## `src/objetos.py` 
+
+Define os objetos e classes principais do jogo (Notification, Player e Food)
 
 
+## `src/utils.py` 
 
-## `src/objetos.py` - Define os objetos principais do jogo.
-Classes:
-
-`Notification`: Gerencia notificações na tela
-`Player`: Representa o jogador (buraco negro)
-`Food`: Representa os objetos que o jogador pode absorver
-
-## `src/utils.py` - Contém funções utilitárias.
-Funções:
-
-limpar(): Limpa a tela do console
-displaysegundos(): Formata segundos para exibição
+Contém funções utilitárias para o código (limpar e display).
 
 ## Loops Principais
 
