@@ -144,14 +144,14 @@ displaysegundos(): Formata segundos para exibição
 
 ## Loops Principais
 
-Loop em main.py:
-- Inicializa o jogo e chama GameLoop.run()
+Loop em `main.py`:
+- Inicializa o jogo e chama `GameLoop.run()`
 
 Loop principal do jogo:
 - Gerencia eventos, atualiza posições, renderiza objetos
 - Controla a lógica de progressão do jogo (estágios, temporizador)
 
-Loops em tela_inicial.py e tela_final.py: 
+Loops em `tela_inicial.py` e `tela_final.py`: 
 - Gerenciam as telas de início e fim do jogo
 
 ## Conceitos:
