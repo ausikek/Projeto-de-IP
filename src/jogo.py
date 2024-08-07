@@ -5,6 +5,7 @@ from .config import LAR, ALT, FUNDO,  PLAYER, COMIDA, RAIO_COMIDA, RAIO_INICIAL_
 from .objetos import Player, Food, Notification
 from .graficos import Graficos
 from tela_final import TelaFinal
+from final_ganhador import TelaVitoria
 import time 
 
 class GameLoop:
@@ -38,6 +39,14 @@ class GameLoop:
         self.estagio_timer = time.time()
         self.estagio_duration = 5 
         self.tempo_left = 120
+        if self.estagio == 5:
+            a = TelaVitoria()
+            if(a.run() == False):
+                exit()
+        pygame.mixer.init()
+        # Load and play the music
+        pygame.mixer.music.load("musica.wav")
+        pygame.mixer.music.play(-1)  # -1 means loop indefinitely
 
     def desenhar_tiles(self):
         tile_size = 50 
@@ -238,5 +247,5 @@ class GameLoop:
             self.clock.tick(60)
             self.raio_comida = int(RAIO_COMIDA + (self.raio * 2))
             self.tempo_left = max(30, 120 - (30 * (self.estagio - 1))) - (current_time - self.tempo_inicial)
-            
-
+        pygame.mixer.music.stop()  
+        pygame.mixer.quit() 
