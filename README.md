@@ -12,6 +12,8 @@ Peritech é um calouro do curso de Ciência da Computação do período de 2024.
       <img src="https://github.com/user-attachments/assets/ac9d598b-83ed-48a3-9a5e-89a4751ed0f8" width="570" height="570">
       <img src="https://github.com/user-attachments/assets/f0da958f-1f87-4ce7-bf8b-d6f7f5015996" width="570" height="570">
       <img src="https://github.com/user-attachments/assets/242cfef3-2dff-47c4-91f9-c0c92ff745c5" width="570" height="570">
+      <img src="https://github.com/user-attachments/assets/902494e5-d1d3-4deb-84d9-f9f502da231a" width="570" height"570">
+
 </p>
 </div>
 
