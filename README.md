@@ -67,6 +67,8 @@ O jogo é executado através de `main.py`.
 
 ├── tela_final.py 
 
+├── final_vencedor.py
+
 └── tela_inicial.py 
 
 Hierarquia e Objetos Principais 
@@ -76,8 +78,10 @@ Objeto principal: `GameLoop`
 
 
 `tela_inicial.py`: Gerencia a tela inicial e a tela de história
-Objetos: `TelaInicial`, `TelaHistoria`
+Objetos: `TelaVitoria`
 
+`final_ganhador.py`: Gerencia a tela de vitória
+Objetos: `TelaInicial`, `TelaHistoria`
 
 `tela_final.py`: Gerencia a tela final do jogo
 Objeto: `TelaFinal`
@@ -153,7 +157,7 @@ Loop principal do jogo:
 - Gerencia eventos, atualiza posições, renderiza objetos
 - Controla a lógica de progressão do jogo (estágios, temporizador)
 
-Loops em `tela_inicial.py` e `tela_final.py`: 
+Loops em `tela_inicial.py`, `tela_final.py` e `final_vencedor.py`: 
 - Gerenciam as telas de início e fim do jogo
 
 ## Conceitos:
