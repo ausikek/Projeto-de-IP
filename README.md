@@ -99,10 +99,15 @@ Gerencia a renderização gráfica do jogo.
 Métodos:
 
 `__init__()`: Inicializa texturas
+
 `setup()`: Configura a tela
+
 `update()`: Atualiza offsets
+
 `textura()`: Renderiza texturas
+
 `circle()`: Desenha círculos
+
 `quadrado()`: Desenha quadrados
 
 
@@ -114,7 +119,9 @@ Contém a lógica principal do jogo, com os movimentos do jogador, spawn de comi
 Métodos:
 
 `__init__()`: Inicializa o jogo
+
 `desenhar_tiles()`: Desenha o grid de fundo
+
 `run()`: Loop principal do jogo
 
 
