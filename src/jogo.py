@@ -16,6 +16,7 @@ class GameLoop:
         self.target_x = self.pos_x  
         self.target_y = self.pos_y 
         self.raio = RAIO_INICIAL_JOGADOR
+        self.objetos = 0
         self.velocidade = 4.2 
         self.fator_i = 0.21 # #0.21  SUAVIDADE DA INTERPOL
         self.jogando = True
@@ -190,6 +191,7 @@ class GameLoop:
                 if pitagoras < self.raio and comida.radius < player.radius:
                     self.animacoes.append(comida)
                     self.comidinhas.remove(comida)
+                    self.objetos += 1
                     if(comida.info["textura"] == "virus"):
                         self.raio *= 1/2
                     if(comida.info["textura"] == "greve"):
@@ -225,8 +227,8 @@ class GameLoop:
                 a = GameLoop(self.estagio + 1)
                 a.run()
             
-            estagio_text = self.font.render(f"{displaysegundos(int(self.tempo_left))}", True, (0, 0, 0))
-            tela.blit(estagio_text, (960, 80))
+            estagio_text = self.font.render(f"{displaysegundos(int(self.tempo_left))} | Objetos coletados: {self.objetos}", True, (0, 0, 0))
+            tela.blit(estagio_text, (750, 80))
             if self.tempo_left <= 0:
                 self.jogando = False
                 TelaFinal()
