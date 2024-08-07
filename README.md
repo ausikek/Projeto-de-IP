@@ -45,18 +45,18 @@ Peritech é um calouro do curso de Ciência da Computação do período de 2024.
 O código é modularizado e dividido em branches diferentes. Utilizamos a branch `main` para as versões finais do nosso código e a branch `dev` para criar as novas features. 
 Além disso, dividimos o código com arquivos diferentes para cada tipo de funcionalidade, como loop principal, configurações, entre outros.
 O jogo é executado através de `main.py`.
-./
-├── src/
-│   ├── config.py
-│   ├── graficos.py
-│   ├── jogo.py
-│   ├── objetos.py
-│   └── utils.py
-├── assets/
-├── main.py
-├── tela_final.py
-└── tela_inicial.py
-Hierarquia e Objetos Principais
+./ 
+├── src/ 
+│   ├── config.py 
+│   ├── graficos.py 
+│   ├── jogo.py 
+│   ├── objetos.py 
+│   └── utils.py 
+├── assets/ 
+├── main.py 
+├── tela_final.py 
+└── tela_inicial.py 
+Hierarquia e Objetos Principais 
 
 `main.py`: Ponto de entrada do jogo
 Objeto principal: `GameLoop`
@@ -85,11 +85,11 @@ Classe principal: `Graficos`
 `src/config.py`: Armazena configurações globais do jogo
 `src/utils.py`: Contém funções utilitárias
 
-##Análise individual dos arquivos
+## Análise individual dos arquivos
 `src/graficos.py` - Gerencia a renderização gráfica do jogo.
 Classe principal: `Graficos`
 
-#Métodos:
+# Métodos:
 
 `__init__()`: Inicializa texturas
 `setup()`: Configura a tela
@@ -100,16 +100,16 @@ Classe principal: `Graficos`
 
 
 
-#`src/jogo.py` - Contém a lógica principal do jogo.
+# `src/jogo.py` - Contém a lógica principal do jogo.
 Classe principal: `GameLoop`
 
-#Métodos:
+# Métodos:
 
 `__init__()`: Inicializa o jogo
 `desenhar_tiles()`: Desenha o grid de fundo
 `run()`: Loop principal do jogo
 
-#Funcionalidades:
+# Funcionalidades:
 
 Gerencia o movimento do jogador
 Spawna e gerencia objetos (comida)
@@ -119,19 +119,19 @@ Implementa sistema de estágios e temporizador
 
 
 #`src/objetos.py` - Define os objetos principais do jogo.
-#Classes:
+# Classes:
 
 `Notification`: Gerencia notificações na tela
 `Player`: Representa o jogador (buraco negro)
 `Food`: Representa os objetos que o jogador pode absorver
 
-#`src/utils.py` - Contém funções utilitárias.
-#Funções:
+# `src/utils.py` - Contém funções utilitárias.
+# Funções:
 
 limpar(): Limpa a tela do console
 displaysegundos(): Formata segundos para exibição
 
-##Loops Principais
+## Loops Principais
 
 Loop em main.py:
 - Inicializa o jogo e chama GameLoop.run()
