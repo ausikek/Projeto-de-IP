@@ -45,6 +45,103 @@ Peritech é um calouro do curso de Ciência da Computação do período de 2024.
 O código é modularizado e dividido em branches diferentes. Utilizamos a branch `main` para as versões finais do nosso código e a branch `dev` para criar as novas features. 
 Além disso, dividimos o código com arquivos diferentes para cada tipo de funcionalidade, como loop principal, configurações, entre outros.
 O jogo é executado através de `main.py`.
+./
+├── src/
+│   ├── config.py
+│   ├── graficos.py
+│   ├── jogo.py
+│   ├── objetos.py
+│   └── utils.py
+├── assets/
+├── main.py
+├── tela_final.py
+└── tela_inicial.py
+Hierarquia e Objetos Principais
+
+`main.py`: Ponto de entrada do jogo
+Objeto principal: `GameLoop`
+
+
+`tela_inicial.py`: Gerencia a tela inicial e a tela de história
+Objetos: `TelaInicial`, `TelaHistoria`
+
+
+`tela_final.py`: Gerencia a tela final do jogo
+Objeto: `TelaFinal`
+
+
+`src/jogo.py`: Contém a lógica principal do jogo
+Classe principal: `GameLoop`
+
+
+`src/objetos.py`: Define os objetos do jogo
+Classes: `Notification`, `Player`, `Food`
+
+
+`src/graficos.py`: Gerencia a renderização gráfica
+Classe principal: `Graficos`
+
+
+`src/config.py`: Armazena configurações globais do jogo
+`src/utils.py`: Contém funções utilitárias
+
+##Análise individual dos arquivos
+`src/graficos.py` - Gerencia a renderização gráfica do jogo.
+Classe principal: `Graficos`
+
+#Métodos:
+
+`__init__()`: Inicializa texturas
+`setup()`: Configura a tela
+`update()`: Atualiza offsets
+`textura()`: Renderiza texturas
+`circle()`: Desenha círculos
+`quadrado()`: Desenha quadrados
+
+
+
+#`src/jogo.py` - Contém a lógica principal do jogo.
+Classe principal: `GameLoop`
+
+#Métodos:
+
+`__init__()`: Inicializa o jogo
+`desenhar_tiles()`: Desenha o grid de fundo
+`run()`: Loop principal do jogo
+
+#Funcionalidades:
+
+Gerencia o movimento do jogador
+Spawna e gerencia objetos (comida)
+Controla colisões e crescimento do jogador
+Implementa sistema de estágios e temporizador
+
+
+
+#`src/objetos.py` - Define os objetos principais do jogo.
+#Classes:
+
+`Notification`: Gerencia notificações na tela
+`Player`: Representa o jogador (buraco negro)
+`Food`: Representa os objetos que o jogador pode absorver
+
+#`src/utils.py` - Contém funções utilitárias.
+#Funções:
+
+limpar(): Limpa a tela do console
+displaysegundos(): Formata segundos para exibição
+
+##Loops Principais
+
+Loop em main.py:
+- Inicializa o jogo e chama GameLoop.run()
+
+Loop principal do jogo:
+- Gerencia eventos, atualiza posições, renderiza objetos
+- Controla a lógica de progressão do jogo (estágios, temporizador)
+
+Loops em tela_inicial.py e tela_final.py: 
+- Gerenciam as telas de início e fim do jogo
 
 ## Conceitos:
 * Programação Orientada a Objetos
