@@ -43,6 +43,8 @@ Peritech é um calouro do curso de Ciência da Computação do período de 2024.
 > O módulo `os` em Python fornece uma maneira de interagir com o sistema operacional. Ele inclui funcionalidades para manipulação de arquivos e diretórios, gerenciamento de processos, e acesso a variáveis de ambiente. Isso permite que scripts Python realizem tarefas como criação e remoção de arquivos, navegação em diretórios e execução de comandos do sistema.
 * Math
 > O módulo `math` em Python oferece funções matemáticas básicas e avançadas. Ele inclui operações como trigonometria, logaritmos, fatoriais, e constantes matemáticas (como π e e). Esse módulo é útil para cálculos matemáticos precisos e eficientes em uma ampla gama de aplicações científicas e de engenharia.
+*Random
+> O módulo `random` do Python oferece resultados aleatórios, sendo muito útil para o jogo, uma vez que rege o ritmo em que objetos aparecem no mapa e suas posições.
 
 ## Organização do código
 O código é modularizado e dividido em branches diferentes. Utilizamos a branch `main` para as versões finais do nosso código e a branch `dev` para criar as novas features. 
