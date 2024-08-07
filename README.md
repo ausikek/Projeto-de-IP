@@ -86,10 +86,10 @@ Classe principal: `Graficos`
 `src/utils.py`: Contém funções utilitárias
 
 ## Análise individual dos arquivos
-`src/graficos.py` - Gerencia a renderização gráfica do jogo.
+## `src/graficos.py` - Gerencia a renderização gráfica do jogo.
 Classe principal: `Graficos`
 
-# Métodos:
+Métodos:
 
 `__init__()`: Inicializa texturas
 `setup()`: Configura a tela
@@ -100,16 +100,16 @@ Classe principal: `Graficos`
 
 
 
-# `src/jogo.py` - Contém a lógica principal do jogo.
+## `src/jogo.py` - Contém a lógica principal do jogo.
 Classe principal: `GameLoop`
 
-# Métodos:
+Métodos:
 
 `__init__()`: Inicializa o jogo
 `desenhar_tiles()`: Desenha o grid de fundo
 `run()`: Loop principal do jogo
 
-# Funcionalidades:
+Funcionalidades:
 
 Gerencia o movimento do jogador
 Spawna e gerencia objetos (comida)
@@ -118,15 +118,15 @@ Implementa sistema de estágios e temporizador
 
 
 
-#`src/objetos.py` - Define os objetos principais do jogo.
-# Classes:
+## `src/objetos.py` - Define os objetos principais do jogo.
+Classes:
 
 `Notification`: Gerencia notificações na tela
 `Player`: Representa o jogador (buraco negro)
 `Food`: Representa os objetos que o jogador pode absorver
 
-# `src/utils.py` - Contém funções utilitárias.
-# Funções:
+## `src/utils.py` - Contém funções utilitárias.
+Funções:
 
 limpar(): Limpa a tela do console
 displaysegundos(): Formata segundos para exibição
